@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TaskFlow – Task Manager</title>
+<meta name="theme-color" content="#6366f1">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><span class="logo">✓</span><span>TaskFlow</span></div>
+    <nav>
+      <button class="nav-btn active" data-view="tasks"><span>📋</span><b>Tasks</b><i id="badge-tasks"></i></button>
+      <button class="nav-btn" data-view="notes"><span>📝</span><b>Notes</b></button>
+      <button class="nav-btn" data-view="history"><span>🕘</span><b>History</b></button>
+      <button class="nav-btn" data-view="analytics"><span>📊</span><b>Analytics</b></button>
+    </nav>
+    <div class="side-foot">
+      <button id="notif-btn" class="notif-btn">🔔 Enable notifications</button>
+      <button id="theme-btn" class="ghost">🌙 Dark mode</button>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <h1 id="view-title">Tasks</h1>
+        <p id="view-sub" class="muted"></p>
+      </div>
+      <button id="primary-action" class="primary">+ New task</button>
+    </header>
+
+    <!-- TASKS -->
+    <section id="view-tasks" class="view active">
+      <form id="task-form" class="card form-grid">
+        <input id="t-title" class="span-all" placeholder="What needs to be done?" required maxlength="120">
+        <label>Date<input id="t-date" type="date" required></label>
+        <label>Time<input id="t-time" type="time" required></label>
+        <label>Priority
+          <select id="t-priority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select>
+        </label>
+        <label>Remind me
+          <select id="t-remind">
+            <option value="0">At due time</option><option value="5">5 min before</option>
+            <option value="15">15 min before</option><option value="30">30 min before</option>
+            <option value="60">1 hour before</option><option value="1440">1 day before</option>
+          </select>
+        </label>
+        <input id="t-desc" class="span-all" placeholder="Details (optional)" maxlength="300">
+        <div class="span-all row end">
+          <button type="button" id="t-cancel" class="ghost hidden">Cancel edit</button>
+          <button type="submit" class="primary" id="t-submit">Add task</button>
+        </div>
+      </form>
+
+      <div class="toolbar">
+        <div class="chips" id="task-filters">
+          <button class="chip active" data-f="all">All</button>
+          <button class="chip" data-f="today">Today</button>
+          <button class="chip" data-f="upcoming">Upcoming</button>
+          <button class="chip" data-f="overdue">Overdue</button>
+        </div>
+        <input id="task-search" type="search" placeholder="Search tasks…">
+      </div>
+      <ul id="task-list" class="list"></ul>
+    </section>
+
+    <!-- NOTES -->
+    <section id="view-notes" class="view">
+      <form id="note-form" class="card">
+        <input id="n-title" placeholder="Note title" maxlength="80">
+        <textarea id="n-body" rows="5" placeholder="Write your note…"></textarea>
+        <div class="row between">
+          <div class="swatches" id="n-colors"></div>
+          <div class="row">
+            <button type="button" id="n-cancel" class="ghost hidden">Cancel</button>
+            <button type="submit" class="primary" id="n-submit">Save note</button>
+          </div>
+        </div>
+      </form>
+      <div class="toolbar"><input id="note-search" type="search" placeholder="Search notes…"></div>
+      <div id="note-grid" class="notes-grid"></div>
+    </section>
+
+    <!-- HISTORY -->
+    <section id="view-history" class="view">
+      <div class="toolbar">
+        <input id="hist-search" type="search" placeholder="Search completed tasks…">
+        <button id="hist-clear" class="ghost danger">Clear history</button>
+      </div>
+      <div id="history-list"></div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section id="view-analytics" class="view">
+      <div class="toolbar">
+        <div class="chips" id="range-chips">
+          <button class="chip active" data-r="7">7 days</button>
+          <button class="chip" data-r="14">14 days</button>
+          <button class="chip" data-r="30">30 days</button>
+        </div>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div class="card"><h3>Tasks completed per day</h3><div id="chart"></div></div>
+      <div class="card"><h3>Completed by priority</h3><div id="prio-bars"></div></div>
+    </section>
+  </main>
+</div>
+
+<div id="toasts"></div>
+<script src="app.js"></script>
+</body>
+</html>
